@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    </head>
+    <body>
+
+    <div style="overflow-x:auto;">
+        <table>
+
+            <tr>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+                <th>Blood Group</th>
+            </tr>
+            {% for d in details %}
+                <tr>
+                    <td>{{ d.name }}</td>
+                    <td>{{ d.phone }}</td>
+                    <td>{{ d.address }}</td>
+                    <td>{{ d.bloodgroup }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        <div class="container" style="margin-top: 70px">
+            <a type="button" class="logoutbtn" href="logout" style="text-decoration: none;color: white;">LOGOUT</a>
+            <a type="button" class="logoutbtn" href="add-donor" style="text-decoration: none;color: white;">ADD DONOR</a>
+
+        </div>
+    </div>
+    </body>
+    </html>
+
+{% endblock %}
