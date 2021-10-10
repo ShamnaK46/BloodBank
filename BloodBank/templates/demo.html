@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #screen{
+            width: 500px;
+            height: 500px;
+            border: solid 1px;
+        }
+    </style>
+
+</head>
+<body>
+<div id="screen"></div>
+<button style="background-color: red" onclick="color('red')">red</button>
+<button style="background-color: green" onclick="color('green')">green</button>
+<button style="background-color: blue" onclick="color('blue')">blue</button>
+<script>
+    function color(col) {
+        document.getElementById("screen").style.background=col
+    }
+</script>
+</body>
+</html>
