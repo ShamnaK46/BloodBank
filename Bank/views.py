@@ -49,13 +49,14 @@ def login(request):
             password = request.session['password']
             user = auth.authenticate(username=username, password=password)
             if user is not None:
+                auth.login(request, user)
                 return redirect('/display')
     elif request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
         user = auth.authenticate(username=username, password=password)
         if user is not None:
-            # auth.login(request, user)
+            auth.login(request, user)
             request.session['username'] = username
             request.session['password'] = password
             return JsonResponse(
@@ -98,10 +99,10 @@ def display(request):
 @login_required(login_url='/login')
 def logout(request):
     try:
-        del request.session['username']
+        auth.logout(request)
         request.session.flush()
         request.session.modified = True
     except:
         pass
-    # auth.logout(request)
+    auth.logout(request)
     return redirect('/')
