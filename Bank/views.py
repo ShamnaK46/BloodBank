@@ -3,7 +3,10 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from django.http import JsonResponse
 from .models import Data
-
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import cache_control
+# Create your views here.
+from django.core.cache import cache
 
 def signup(request):
     if request.session.has_key('username'):
@@ -38,7 +41,7 @@ def signup(request):
             messages.info(request, 'password mismatch')
     return render(request, 'signup.html')
 
-
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def login(request):
     if request.session.has_key('username'):
         username = request.session['username']
@@ -69,12 +72,12 @@ def login(request):
         return render(request, "login.html")
     return render(request, "login.html")
 
-
+@login_required(login_url='/login')
 def home(request):
     return render(request, 'login.html')
 
 
-
+@login_required(login_url='/login')
 def adddonor(request):
     if request.method == 'POST':
         first_name = request.POST['first_name']
@@ -87,15 +90,17 @@ def adddonor(request):
     else:
         return render(request, 'register.html')
 
-
+@login_required(login_url='/login')
 def display(request):
     detail = Data.objects.all()
     return render(request, 'data.html', {'details': detail})
 
-
+@login_required(login_url='/login')
 def logout(request):
     try:
         del request.session['username']
+        request.session.flush()
+        request.session.modified = True
     except:
         pass
     # auth.logout(request)
