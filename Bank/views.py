@@ -32,6 +32,12 @@ def signup(request):
             elif User.objects.filter(email=email).exists():
                 messages.info(request, ' email ID already exists')
                 return redirect('signup')
+            elif first_name == '':
+                messages.info(request, ' First Name field required')
+            elif username == '':
+                messages.info(request, ' Username field required')
+            elif password1 == '':
+                messages.info(request, ' Password field required')
             else:
                 user = User.objects.create_user(username=username, password=password1, email=email,
                                                 first_name=first_name, last_name=last_name)
